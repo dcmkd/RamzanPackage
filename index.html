@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ramazan Package 2026 - District Malakand</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Nastaliq+Urdu&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --green-dark: #014421;
+            --green-mid: #006400;
+            --green-light: #1a7a3c;
+            --green-pale: #e8f5ec;
+            --gold: #c8922a;
+            --gold-light: #f5e6c8;
+            --white: #ffffff;
+            --off-white: #f7f8f6;
+            --text-dark: #1a1a1a;
+            --text-muted: #777;
+            --border: #d0d8d2;
+            --shadow: 0 2px 16px rgba(1,68,33,0.10);
+            --radius: 10px;
+        }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--off-white);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-stripe { background: var(--green-dark); height: 6px; }
+        .header-gold-stripe { background: var(--gold); height: 3px; }
+
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 20px 16px;
+        }
+
+        .header-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .logo { width: 100px; height: 100px; object-fit: contain; }
+
+        .logo-placeholder {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            background: var(--green-dark);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold);
+            font-size: 28px; font-weight: 700;
+        }
+
+        .header-text { text-align: center; }
+
+        .header-text .urdu {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1.05rem; color: var(--green-dark);
+            display: block; direction: rtl; line-height: 1.9; text-align: center;
+        }
+
+        .header-text .eng-main {
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.05rem; font-weight: 600; color: var(--green-dark);
+            text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.3;
+        }
+
+        .header-text .eng-sub { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+
+        .banner {
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-light) 100%);
+            color: var(--white); text-align: center;
+            padding: 28px 20px 22px;
+            position: relative; overflow: hidden;
+        }
+        .banner::before {
+            content: ''; position: absolute; top: -30px; right: -30px;
+            width: 160px; height: 160px; border-radius: 50%;
+            background: rgba(200,146,42,0.12);
+        }
+        .banner::after {
+            content: ''; position: absolute; bottom: -40px; left: -20px;
+            width: 120px; height: 120px; border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+        }
+
+        .banner-badge {
+            display: inline-block; background: var(--gold); color: var(--green-dark);
+            font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+            text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 10px;
+        }
+
+        .banner h1 {
+            font-family: 'Amiri', serif; font-size: 1.7rem; font-weight: 700;
+            margin-bottom: 4px; line-height: 1.25;
+        }
+
+        .banner .urdu-title {
+            font-family: 'Noto Nastaliq Urdu', serif; font-size: 1.1rem;
+            direction: rtl; opacity: 0.92; margin-top: 6px; display: block;
+        }
+
+        .banner .district-tag {
+            margin-top: 10px; font-size: 0.85rem; opacity: 0.85;
+            letter-spacing: 0.08em; text-transform: uppercase;
+        }
+
+        main {
+            flex: 1; max-width: 700px; width: 100%;
+            margin: 32px auto; padding: 0 16px;
+        }
+
+        .card {
+            background: var(--white); border-radius: var(--radius);
+            border: 1px solid var(--border); box-shadow: var(--shadow);
+            padding: 28px 24px; margin-bottom: 20px;
+        }
+
+        .card-label {
+            font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--green-mid);
+            margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+        }
+        .card-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        .db-status {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.78rem; padding: 8px 12px;
+            border-radius: 6px; margin-bottom: 16px;
+            border: 1px solid transparent;
+        }
+        .db-status.loading { background: #fff8e1; border-color: #ffe082; color: #7a5800; }
+        .db-status.ok      { background: var(--green-pale); border-color: #b2dfcb; color: var(--green-dark); }
+        .db-status.fail    { background: #fff0f0; border-color: #f5c6cb; color: #8b1a1a; }
+
+        .db-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .db-status.loading .db-dot { background: #f9a825; animation: pulse 1s infinite; }
+        .db-status.ok .db-dot      { background: var(--green-mid); }
+        .db-status.fail .db-dot    { background: #c0392b; }
+
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        .fallback-upload {
+            margin-top: 10px; padding: 12px 14px;
+            background: #fff8e1; border: 1px dashed #e0b84a;
+            border-radius: var(--radius); font-size: 0.8rem; color: #7a5800;
+            display: none;
+        }
+        .fallback-upload label { font-weight: 600; display: block; margin-bottom: 6px; }
+        .fallback-upload input[type=file] { font-size: 0.8rem; }
+
+        .input-wrap { position: relative; }
+
+        .cnic-input {
+            width: 100%; padding: 16px 54px 16px 18px;
+            font-size: 1.2rem; font-family: 'Source Serif 4', serif;
+            letter-spacing: 0.08em; border: 2px solid var(--border);
+            border-radius: var(--radius); outline: none;
+            color: var(--text-dark); background: var(--off-white);
+            transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+            -webkit-appearance: none;
+        }
+        .cnic-input:focus {
+            border-color: var(--green-mid); background: var(--white);
+            box-shadow: 0 0 0 3px rgba(0,100,0,0.10);
+        }
+        .cnic-input::placeholder { color: #aab5ad; font-size: 1rem; letter-spacing: 0.02em; }
+
+        .input-icon {
+            position: absolute; right: 16px; top: 50%;
+            transform: translateY(-50%); width: 26px; height: 26px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .input-hint {
+            margin-top: 8px; font-size: 0.78rem; color: var(--text-muted);
+            display: flex; align-items: center; gap: 6px;
+        }
+
+        .input-error { color: #c0392b; font-size: 0.8rem; margin-top: 6px; display: none; }
+
+        .search-btn {
+            width: 100%; margin-top: 14px; padding: 15px;
+            background: var(--green-dark); color: var(--white);
+            font-family: 'Source Serif 4', serif; font-size: 1rem;
+            font-weight: 600; letter-spacing: 0.04em;
+            border: none; border-radius: var(--radius);
+            cursor: pointer; transition: background 0.2s, transform 0.1s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .search-btn:hover { background: var(--green-light); }
+        .search-btn:active { transform: scale(0.98); }
+
+        .spinner {
+            width: 20px; height: 20px;
+            border: 2px solid rgba(255,255,255,0.35);
+            border-top-color: #fff; border-radius: 50%;
+            animation: spin 0.7s linear infinite; display: none;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #result { display: none; }
+
+        .result-success { border-radius: var(--radius); border: 1.5px solid #b2dfcb; overflow: hidden; }
+
+        .result-header {
+            background: var(--green-dark); color: var(--white);
+            padding: 14px 20px; display: flex; align-items: center; gap: 12px;
+        }
+
+        .verified-badge {
+            background: var(--gold); color: var(--green-dark);
+            font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            padding: 3px 10px; border-radius: 20px; margin-left: auto;
+        }
+
+        .result-header-text { font-size: 0.95rem; font-weight: 600; }
+        .result-header-sub { font-size: 0.75rem; opacity: 0.78; margin-top: 1px; }
+
+        .result-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 13px 20px; border-bottom: 1px solid var(--green-pale); gap: 12px;
+        }
+        .result-row:last-child { border-bottom: none; }
+
+        .result-key {
+            font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em;
+            color: var(--text-muted); flex-shrink: 0;
+        }
+        .result-val { font-size: 0.97rem; font-weight: 600; color: var(--text-dark); text-align: right; word-break: break-all; }
+        .amount-val { font-size: 1.3rem; color: var(--green-dark); font-family: 'Amiri', serif; }
+
+        .result-footer {
+            background: var(--green-pale); padding: 10px 20px;
+            text-align: center; font-size: 0.75rem; color: var(--green-mid);
+            border-top: 1px solid #b2dfcb;
+        }
+
+        .print-btn {
+            margin-top: 14px; width: 100%; padding: 12px;
+            background: transparent; color: var(--green-dark);
+            font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 600;
+            border: 1.5px solid var(--green-mid); border-radius: var(--radius);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            gap: 8px; transition: background 0.2s;
+        }
+        .print-btn:hover { background: var(--green-pale); }
+
+        .result-error {
+            background: #fff5f5; border: 1.5px solid #f5c6cb;
+            border-radius: var(--radius); padding: 20px; text-align: center;
+        }
+        .result-error .err-icon { font-size: 2rem; margin-bottom: 8px; }
+        .result-error .err-title { font-size: 1rem; font-weight: 600; color: #8b1a1a; margin-bottom: 4px; }
+        .result-error .err-sub { font-size: 0.82rem; color: #b54040; }
+        .result-error .err-urdu {
+            font-family: 'Noto Nastaliq Urdu', serif; direction: rtl;
+            margin-top: 8px; font-size: 0.9rem; color: #b54040;
+        }
+
+        .info-box {
+            background: var(--gold-light); border: 1px solid #e0c07a;
+            border-left: 4px solid var(--gold); border-radius: var(--radius);
+            padding: 14px 18px; font-size: 0.82rem; color: #5a3e10; line-height: 1.6;
+        }
+        .info-box strong { color: var(--green-dark); }
+        .info-box .urdu-info {
+            font-family: 'Noto Nastaliq Urdu', serif; direction: rtl;
+            display: block; margin-top: 6px; font-size: 0.88rem;
+        }
+
+        footer {
+            background: var(--green-dark); color: rgba(255,255,255,0.75);
+            text-align: center; padding: 20px 16px;
+            font-size: 0.78rem; margin-top: auto;
+        }
+        footer .footer-helpline { color: var(--gold); font-weight: 600; font-size: 0.85rem; margin-bottom: 6px; }
+
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+            body { background: #fff !important; margin: 0; padding: 0; }
+
+            /* Hide everything except what we want */
+            .header-stripe, .header-gold-stripe, .banner,
+            .search-btn, .print-btn, .info-box, footer,
+            .db-status, .fallback-upload,
+            .input-wrap, .input-hint, .input-error,
+            .card-label { display: none !important; }
+
+            /* Show result even if it was hidden */
+            #result { display: block !important; }
+
+            /* Keep the card visible but strip its shadow/border */
+            .card {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            main {
+                margin: 10px auto !important;
+                padding: 0 10px !important;
+            }
+
+            /* Print header — replicate official look */
+            header {
+                display: block !important;
+                border-bottom: 2px solid #014421 !important;
+                padding: 12px 16px !important;
+                text-align: center;
+            }
+
+            .header-inner {
+                flex-direction: row !important;
+                justify-content: center;
+                gap: 14px;
+            }
+
+            .logo { width: 70px !important; height: 70px !important; }
+            .logo-placeholder { width: 70px !important; height: 70px !important; font-size: 20px !important; }
+
+            /* Print slip title bar */
+            .print-slip-title {
+                display: block !important;
+                background: #014421 !important;
+                color: #fff !important;
+                text-align: center;
+                padding: 8px 16px;
+                font-size: 1rem;
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                margin-bottom: 10px;
+            }
+
+            .result-success { border: 1.5px solid #014421 !important; }
+            .result-header  { background: #014421 !important; -webkit-print-color-adjust: exact; }
+            .result-footer  { background: #e8f5ec !important; -webkit-print-color-adjust: exact; }
+            .verified-badge { background: #c8922a !important; color: #014421 !important; }
+
+            .result-row { border-bottom: 1px solid #ccc !important; padding: 10px 16px !important; }
+            .result-key { color: #555 !important; }
+            .result-val { color: #111 !important; }
+            .amount-val { color: #014421 !important; }
+        }
+
+        @media (max-width: 480px) {
+            .logo, .logo-placeholder { width: 80px; height: 80px; }
+            .banner h1 { font-size: 1.2rem; }
+            .card { padding: 20px 16px; }
+            .cnic-input { font-size: 1.05rem; padding: 14px 46px 14px 14px; }
+            .result-row { flex-direction: column; align-items: flex-start; gap: 2px; }
+            .result-val { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-stripe"></div>
+<div class="header-gold-stripe"></div>
+
+<header>
+    <div class="header-inner">
+        <div class="logo-wrap">
+            <img src="KP_logo.png" alt="KP Government Logo" class="logo"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div class="logo-placeholder" style="display:none;">KP</div>
+        </div>
+        <div class="header-text">
+            <span class="urdu">حکومت خیبر پختونخوا</span>
+            <div class="eng-main">Government of Khyber Pakhtunkhwa</div>
+            <div class="eng-sub">District Administration, Malakand</div>
+        </div>
+    </div>
+</header>
+
+<div class="banner">
+    <div class="banner-badge">Official Portal — 2026</div>
+    <h1>Ramazan Package Payment Status</h1>
+    <span class="urdu-title">رمضان پیکج ادائیگی — ضلع ملاکنڈ</span>
+    <div class="district-tag">District Malakand · Khyber Pakhtunkhwa</div>
+</div>
+
+<!-- Shown only when printing -->
+<div class="print-slip-title" style="display:none;">
+    Ramazan Package 2026 — Payment Slip &nbsp;|&nbsp; District Malakand
+</div>
+
+<main>
+
+    <div class="card">
+        <div class="db-status loading" id="dbStatus">
+            <div class="db-dot"></div>
+            <span id="dbStatusText">Loading payment database, please wait…</span>
+        </div>
+
+        <div class="fallback-upload" id="fallbackUpload">
+            <label>&#x26A0; Database could not load automatically. Please select the <strong>payment.xlsx</strong> file manually:</label>
+            <input type="file" id="manualFile" accept=".xlsx,.xls" onchange="loadManualFile(this)">
+        </div>
+
+        <div class="input-wrap">
+            <input type="text" class="cnic-input" id="cnicInput"
+                   placeholder="Enter 13-digit CNIC (without dashes)"
+                   maxlength="13" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+            <div class="input-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#aab5ad" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="5" width="20" height="14" rx="2"/>
+                    <circle cx="9" cy="11" r="2.5"/>
+                    <path d="M14 9h4M14 13h3"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="input-error" id="inputError">&#x26A0; Please enter digits only — no dashes or spaces.</div>
+
+        <div class="input-hint">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            Example: 1730112345678
+        </div>
+
+        <button class="search-btn" onclick="triggerSearch()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <span id="btnText">Check Payment Status</span>
+            <div class="spinner" id="spinner"></div>
+        </button>
+
+        <div id="result" style="margin-top:20px;"></div>
+
+        <button class="print-btn" id="printBtn" style="display:none;" onclick="window.print()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print / Save as PDF
+        </button>
+    </div>
+
+    <div class="info-box">
+        <strong>Important Notice:</strong> This portal is for official verification of Ramazan Package payments under the Government of Khyber Pakhtunkhwa. For assistance contact your nearest Assistant Commissioner Office at Batkhela &amp; Dargai.
+        <span class="urdu-info">اہم اطلاع: یہ پورٹل رمضان پیکج کی ادائیگی کی سرکاری تصدیق کے لیے ہے۔ مزید معلومات کے لیے اپنے قریبی دفتر اسسٹنٹ کمشنر بٹخیلہ یا درگئی سے رابطہ کریں۔</span>
+    </div>
+
+</main>
+
+<footer>
+    <div class="footer-helpline">Helpline: 0313-9734373</div>
+    District Administration, Malakand &nbsp;|&nbsp; Khyber Pakhtunkhwa, Pakistan<br>
+    <span style="margin-top:6px;display:block;">Developed by <strong style="color:#fff;">Muhammad Tahir</strong> &nbsp;&copy; 2026</span>
+</footer>
+
+<script>
+    let excelData = [];
+    let dbLoaded   = false;
+
+    const dbStatus     = document.getElementById('dbStatus');
+    const dbStatusText = document.getElementById('dbStatusText');
+    const fallbackDiv  = document.getElementById('fallbackUpload');
+
+    function setStatus(state, msg) {
+        dbStatus.className = 'db-status ' + state;
+        dbStatusText.textContent = msg;
+        fallbackDiv.style.display = (state === 'fail') ? 'block' : 'none';
+    }
+
+    function parseWorkbook(arrayBuffer) {
+        const data     = new Uint8Array(arrayBuffer);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheet    = workbook.Sheets[workbook.SheetNames[0]];
+        excelData      = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+        dbLoaded       = true;
+        setStatus('ok', 'Payment database loaded — ' + excelData.length + ' records ready.');
+    }
+
+    /* Try multiple path variants to cover GitHub Pages subdirectory deployments */
+    async function autoLoad() {
+        const base  = location.href.substring(0, location.href.lastIndexOf('/') + 1);
+        const paths = [
+            'payment.xlsx',
+            './payment.xlsx',
+            base + 'payment.xlsx'
+        ];
+
+        for (const path of paths) {
+            try {
+                const res = await fetch(path, { cache: 'no-cache' });
+                if (!res.ok) continue;
+                const buf = await res.arrayBuffer();
+                parseWorkbook(buf);
+                return;
+            } catch (e) {
+                console.warn('Fetch failed:', path, e.message);
+            }
+        }
+
+        setStatus('fail', 'Could not load database automatically. Please upload the file below.');
+    }
+
+    function loadManualFile(input) {
+        const file = input.files[0];
+        if (!file) return;
+        setStatus('loading', 'Loading uploaded file…');
+        const reader = new FileReader();
+        reader.onload  = e => { try { parseWorkbook(e.target.result); } catch(err) { setStatus('fail', 'Invalid file. Make sure you select the correct payment.xlsx.'); } };
+        reader.onerror = () => setStatus('fail', 'Failed to read file.');
+        reader.readAsArrayBuffer(file);
+    }
+
+    window.onload = autoLoad;
+
+    /* ── Input ── */
+    const input      = document.getElementById('cnicInput');
+    const resultDiv  = document.getElementById('result');
+    const inputError = document.getElementById('inputError');
+
+    input.addEventListener('input', function(e) {
+        let v = e.target.value;
+        if (/[^0-9]/.test(v)) {
+            e.target.value = v.replace(/[^0-9]/g, '');
+            inputError.style.display = 'block';
+            setTimeout(() => { inputError.style.display = 'none'; }, 2500);
+            return;
+        }
+        inputError.style.display = 'none';
+        resultDiv.style.display  = 'none';
+        document.getElementById('printBtn').style.display = 'none';
+        if (v.length === 13) setTimeout(() => checkCNIC(v), 120);
+    });
+
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') triggerSearch(); });
+
+    function triggerSearch() {
+        const val = input.value.trim();
+        if (val.length !== 13) {
+            inputError.textContent    = '⚠ Please enter a complete 13-digit CNIC number.';
+            inputError.style.display  = 'block';
+            input.focus();
+            return;
+        }
+        checkCNIC(val);
+    }
+
+    function showSpinner(on) {
+        document.getElementById('spinner').style.display = on ? 'block' : 'none';
+        document.getElementById('btnText').textContent   = on ? 'Searching…' : 'Check Payment Status';
+    }
+
+    function checkCNIC(cnic) {
+        if (!dbLoaded) {
+            resultDiv.innerHTML = `<div class="result-error">
+                <div class="err-icon">&#x26A0;</div>
+                <div class="err-title">Database Not Ready</div>
+                <div class="err-sub">Please wait for the database to load, or upload payment.xlsx manually using the option above.</div>
+            </div>`;
+            resultDiv.style.display = 'block';
+            return;
+        }
+
+        showSpinner(true);
+        resultDiv.style.display = 'none';
+
+        setTimeout(() => {
+            showSpinner(false);
+
+            const record = excelData.find(row =>
+                String(row.cnic).trim().replace(/[-\s]/g, '') === cnic
+            );
+
+            if (record) {
+                resultDiv.innerHTML = `
+                    <div class="result-success">
+                        <div class="result-header">
+                            <div>
+                                <div class="result-header-text">Payment Record Found</div>
+                                <div class="result-header-sub">ادائیگی کا ریکارڈ موجود ہے</div>
+                            </div>
+                            <div class="verified-badge">&#10003; Verified</div>
+                        </div>
+                        <div class="result-body">
+                            <div class="result-row">
+                                <span class="result-key">CNIC No.</span>
+                                <span class="result-val">${record.cnic}</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-key">Name / نام</span>
+                                <span class="result-val">${record.name}</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-key">Transaction ID</span>
+                                <span class="result-val">${record.ID}</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-key">Disbursement Date</span>
+                                <span class="result-val">${record.date}</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-key">Amount / رقم</span>
+                                <span class="result-val amount-val">Rs. ${Number(record.amount).toLocaleString('en-PK')}</span>
+                            </div>
+                        </div>
+                        <div class="result-footer">
+                            Government of Khyber Pakhtunkhwa — Ramazan Package 2026
+                            &nbsp;|&nbsp; Printed: ${new Date().toLocaleDateString('en-PK', {day:'2-digit',month:'short',year:'numeric'})}
+                        </div>
+                    </div>`;
+                document.getElementById('printBtn').style.display = 'flex';
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="result-error">
+                        <div class="err-icon">&#x274C;</div>
+                        <div class="err-title">Not Registered as Beneficiary</div>
+                        <div class="err-sub">CNIC <strong>${cnic}</strong> is not found in the KP Ramazan Package 2026 beneficiary list for District Malakand.</div>
+                        <div class="err-urdu">یہ شناختی کارڈ نمبر رمضان پیکج 2026 ضلع ملاکنڈ کی فہرست میں شامل نہیں ہے۔</div>
+                    </div>`;
+                document.getElementById('printBtn').style.display = 'none';
+            }
+
+            resultDiv.style.display = 'block';
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 400);
+    }
+</script>
+
+</body>
+</html>
